@@ -5,29 +5,28 @@ module.exports = function check(str, bracketsConfig) {
   let strLength = str.length;
   let bracketsConfigLength = bracketsConfig.length;
   let arr = str.split('');
-  let result = [];
+  const result = [];
+
+  if (str.length % 2 != 0) {
+    return false;
+  }
 
   for (let i = 0; i < bracketsConfigLength; i++) {
     openBrackets.push(bracketsConfig[i][0]);
     closeBrackets.push(bracketsConfig[i][1]);
   }
-  
-  let openBracketsLength = openBrackets.length;
 
   for (let i = 0; i < strLength; i++) {
-    for (let j = 0; j < openBracketsLength; j++) {
-      if (arr[i] == openBrackets[i]) {
-        result.push(arr[i]);
-      /*} else if (arr[i] == closeBrackets && arr[i - 1] == openBrackets) {
-        result.pop(i);*/
+    for (let j = 0; j < bracketsConfigLength; j++) {
+      if (result[result.length - 1] == openBrackets[j] && arr[i] == closeBrackets[j]) {
+        result.pop();
       } else {
-        
-        result.pop(i);//return false;
+        if (arr[i] == openBrackets[j]) {
+          result.push(arr[i]);
+        }
       }
-      
     }
   }
-  console.log(result);
   
   if (result.length == 0) {
     return true;
